@@ -52,7 +52,7 @@ Maybe.prototype.apply = function (f) {
  * @lends Maybe
  */
 Maybe.prototype.getValue = function () {
-    if (this instanceof Nothing || undefined === this.value) {
+    if (this instanceof Nothing) {
         return this;
     }
 
