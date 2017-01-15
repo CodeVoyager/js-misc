@@ -39,8 +39,6 @@ List.zip = function () {
         return currentMin;
     }, Infinity);
 
-    console.log(lists, 'ists');
-
     while (++listItemIndex < minLength) {
         while (++listIndex < lists.length) {
             if (lists[listIndex] instanceof List) {
