@@ -1,11 +1,6 @@
 var Category,
     createCategoryTypeValidator,
-    createCategoryInstanceValidator,
-    Maybe;
-
-if ('udefined' !== (typeof require) && 'function' === (typeof require)) {
-    var Maybe = require('../monad/Maybe');
-}
+    createCategoryInstanceValidator;
 
 /**
  * Higher order function used as factory for type validation with use of 'typeof';
@@ -78,15 +73,44 @@ Category = {
     'Object': createCategoryInstanceValidator(Object, 'Object'),
     'Date': createCategoryInstanceValidator(Date, 'Date'),
     'RegExp': createCategoryInstanceValidator(RegExp, 'RegExp'),
-    'Array': createCategoryInstanceValidator(Array, 'Array')
+    'Array': createCategoryInstanceValidator(Array, 'Array'),
+    'addInstanceValidator': function (obj, name) {
+        Category[name] = createCategoryInstanceValidator(obj, name);
+    },
+    getElementType: function (el) {
+        if (el instanceof Object) {
+            if (el.__type) {
+                return el.__type;
+            }
+            return Object.prototype.toString.call(el);
+        }
+
+        if (null === el) {
+            return 'null';
+        }
+
+        return (typeof el);
+    },
+    elementsTypesAreEqual: function (a, b) {
+        var aType = Category.getElementType(a),
+            bType = Category.getElementType(b);
+
+            debugger;
+
+        if (aType.length === bType.length && aType === bType) {
+            return true;
+        } else if ((aType === '[]' || bType === '[]') && Category.List) {
+            try {
+                Category.List(a);
+                Category.List(b);
+
+                return true;
+            } catch (e) {}
+        }
+
+        throw new Error(['Elements types mismatch: "', aType, '" against "', bType, '"'].join(''));
+    }
 };
-
-if (Maybe) {
-    Category.Maybe = createCategoryInstanceValidator(Maybe.Maybe, 'Maybe');
-    Category.Just = createCategoryInstanceValidator(Maybe.Just, 'Just');
-    Category.Nothing = createCategoryInstanceValidator(Maybe.Nothing, 'Nothing');
-}
-
 
 if ('undefined' !== (typeof module) && module && module.exports) {
     module.exports = {

@@ -1,4 +1,11 @@
-var Maybe, Just, Nothing;
+var Maybe, Just, Nothing, Category;
+
+
+if ('undefined' !== (typeof require) && 'function' === (typeof require)) {
+    var Category = require('./Category');
+}
+
+Category = Category || window.Category;
 
 /**
  * Constructor for Maybe. Used only as inheritance base type class
@@ -65,6 +72,12 @@ Maybe.prototype.getValue = function () {
 
 Just.prototype = new Maybe();
 Nothing.prototype = new Maybe();
+
+if (Category) {
+    Category.addInstanceValidator(Maybe, 'Maybe');
+    Category.addInstanceValidator(Just, 'Just');
+    Category.addInstanceValidator(Nothing, 'Nothing');
+}
 
 if ('undefined' !== (typeof module) && module && module.exports) {
     module.exports = {
