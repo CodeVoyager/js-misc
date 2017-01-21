@@ -67,7 +67,7 @@ createCategoryInstanceValidator = function (object, name) {
 Category = {
     'String': createCategoryTypeValidator('string'),
     'Bool': createCategoryTypeValidator('boolean'),
-    'Nubmer': createCategoryTypeValidator('number'),
+    'Number': createCategoryTypeValidator('number'),
     'Null': createCategoryTypeValidator('null'),
     'Undefined': createCategoryTypeValidator('undefined'),
     'Object': createCategoryInstanceValidator(Object, 'Object'),
