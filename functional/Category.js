@@ -1,3 +1,5 @@
+/*global module*/
+
 var Category,
     createCategoryTypeValidator,
     createCategoryInstanceValidator;
@@ -10,24 +12,25 @@ var Category,
  *
  * @method  createCategoryTypeValidator
  * @param   {string} type Expected type.
- * @returns {function}
+ * @returns {function} Newly created validator
  */
 createCategoryTypeValidator = function (type) {
+    'use strict';
     /**
      * Generated validation function.
      *
      * @method
      * @param {mixed} value Checked value
-     * @returns {mixed}
+     * @returns {mixed} Identity
      * @throws Error
      */
     return function (value) {
         if (type === (typeof value)) {
             return value;
         } else {
-            throw new Error(["Unexpected type of value: ", value, '. Expected type "', type, '" but "', (typeof value), '" is given.'].join(''));
+            throw new Error(['Unexpected type of value: ', value, '. Expected type "', type, '" but "', (typeof value), '" is given.'].join(''));
         }
-    }
+    };
 };
 
 /**
@@ -37,8 +40,9 @@ createCategoryTypeValidator = function (type) {
  * than value is being returned. Error is thrown otherwise.
  *
  * @method  createCategoryTypeValidator
- * @param   {string} type Expected type.
- * @returns {function}
+ * @param   {object} object Expected object instance.
+ * @param   {string} name Expected object instance name.
+ * @returns {function} Newly created validation function
  */
 createCategoryInstanceValidator = function (object, name) {
     /**
@@ -46,16 +50,16 @@ createCategoryInstanceValidator = function (object, name) {
      *
      * @method
      * @param {mixed} value Checked value
-     * @returns {mixed}
+     * @returns {mixed} Identity
      * @throws Error
      */
     return function (value) {
         if (value instanceof object) {
             return value;
         } else {
-            throw new Error(["Value: ", Object.prototype.toString.call(value), ' is not instance of "', name, '".'].join(''));
+            throw new Error(['Value: ', Object.prototype.toString.call(value), ' is not instance of "', name, '".'].join(''));
         }
-    }
+    };
 };
 
 /**
@@ -69,6 +73,7 @@ Category = {
     'Bool': createCategoryTypeValidator('boolean'),
     'Number': createCategoryTypeValidator('number'),
     'Null': createCategoryTypeValidator('null'),
+    'Function': createCategoryTypeValidator('function'),
     'Undefined': createCategoryTypeValidator('undefined'),
     'Object': createCategoryInstanceValidator(Object, 'Object'),
     'Date': createCategoryInstanceValidator(Date, 'Date'),
@@ -94,8 +99,6 @@ Category = {
     elementsTypesAreEqual: function (a, b) {
         var aType = Category.getElementType(a),
             bType = Category.getElementType(b);
-
-            debugger;
 
         if (aType.length === bType.length && aType === bType) {
             return true;

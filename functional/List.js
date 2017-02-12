@@ -9,6 +9,10 @@ curryFunction = Misc.curryFunction || window.curryFunction;
 
 Category = Category || window.Category;
 
+/**
+ * List :: a -> [a]
+ * @method List
+ */
 List = function () {
     var index = -1;
 
@@ -21,13 +25,25 @@ List = function () {
 };
 
 List.of = function () {
-    return new List();
+    var index = -1,
+        newList = new List();
+
+    while (++index < arguments.length) {
+        this.append(arguments[index]);
+    }
+
+    return newList;
 };
 
 List.prototype.validate = function (el) {
     return el;
 };
 
+/**
+ * List.zip :: [a] -> [b] -> [(a,b)]
+ * @method  zip
+ * @returns {Tuple}
+ */
 List.zip = function () {
     var args = Array.prototype.slice.apply(arguments, [0]),
         lists = args.filter(function (list) {
