@@ -1,24 +1,23 @@
 (function () {
     'use strict';
     var mergeSort = function (input, cmp, start, end) {
-            start = start || 0;
-            end = end || input.length;
-            cmp = cmp || mergeSort.cmp;
+        start = start || 0;
+        end = end || input.length;
+        cmp = cmp || mergeSort.cmp;
 
-            if (Math.abs(end - start) <= 1) {
-                return [];
-            }
-            if (start < end) {
-                var middle = Math.ceil((start + end) / 2);
+        if (Math.abs(end - start) <= 1) {
+            return [];
+        }
+        if (start < end) {
+            var middle = Math.ceil((start + end) / 2);
 
-                mergeSort(input, cmp, start, middle);
-                mergeSort(input, cmp, middle, end);
-                mergeSort.merge(input, cmp, start, middle, end);
-            }
+            mergeSort(input, cmp, start, middle);
+            mergeSort(input, cmp, middle, end);
+            mergeSort.merge(input, cmp, start, middle, end);
+        }
 
-            return input;
-        },
-        _input = [5, 3, 4, 2, 1, 6];
+        return input;
+    };
 
     mergeSort.merge = function (input, cmp, start, middle, end) {
         var leftSize = middle - start,
@@ -58,7 +57,7 @@
         return a - b;
     };
 
-    console.log(mergeSort(_input), 'First run');
-    console.log(mergeSort(_input.concat([8,9,7])), 'Second run');
-    console.log(mergeSort(_input.concat([8,9,7,12, 11, 10])), 'Third run');
-}())
+    console.log(mergeSort([5, 3, 4, 2, 1, 6]), 'First run');
+    console.log(mergeSort([5, 3, 4, 2, 1, 6].concat([8,9,7])), 'Second run');
+    console.log(mergeSort([5, 3, 4, 2, 1, 6].concat([7,12, 11, 8,9, 10])), 'Third run');
+}());
