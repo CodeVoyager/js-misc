@@ -26,8 +26,7 @@
             maxSize = Math.max(leftSize, rightSize),
             left = [],
             right = [],
-            i = -1,
-            size = end - start;
+            i = -1;
 
         while (++i < maxSize) {
             left.push(input[start + i]);
