@@ -16,17 +16,9 @@ var reverse = function(x) {
         return x * im;
     }
 
-    let m = 1;
-    let r = x;
+    let m = Math.pow(10, Math.log10(x) | 0);
+    let r = 0;
     let rm = 0;
-
-    while (x >= 10) {
-        m *= 10;
-        x = (x / 10) | 0;
-    }
-
-    x = r;
-    r = 0;
 
     while (x > 0) {
         rm = x % 10;
