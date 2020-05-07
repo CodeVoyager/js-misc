@@ -17,19 +17,19 @@
  */
 var maxDepth = function (root) {
   if (!root) {
-    return 0
+    return 0;
   }
-  let maxLevel = 1;
-  function goDeeper(node, level) {
+  let share = { max: 1 };
+  function goDeeper(node, level, share) {
     if (node) {
       if (!node.left && !node.right) {
-        maxLevel = level > maxLevel ? level : maxLevel;
+        share.max = level > share.max ? level : share.max;
       }
-      goDeeper(node.left, level + 1);
-      goDeeper(node.right, level + 1);
+      goDeeper(node.left, level + 1, share);
+      goDeeper(node.right, level + 1, share);
     }
   }
-  goDeeper(root, 1);
+  goDeeper(root, 1, share);
 
-  return maxLevel;
+  return share.max;
 };
